@@ -20,7 +20,7 @@ class RegisterUserType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label' => "Votre adresse email",
+                'label' => "Votre adresse email :",
                 'attr' => [
                     'placeholder' => "Indiquez votre email"
                     ]
@@ -34,14 +34,14 @@ class RegisterUserType extends AbstractType
                     ])
                 ],
                 'first_options'  => [
-                    'label' => 'Votre mot de passe',
+                    'label' => 'Votre mot de passe :',
                     'attr' => [
                         'placeholder' => "Choisissez votre mot de passe"
                     ],
                      'hash_property_path' => 'password'
                     ],
                 'second_options' => [
-                    'label' => 'Confirmez votre mot de passe',
+                    'label' => 'Confirmez votre mot de passe :',
                     'attr' => [
                         'placeholder' => "Confirmez votre mot de passe"
                     ]
@@ -49,7 +49,7 @@ class RegisterUserType extends AbstractType
                 'mapped' => false,
             ])
             ->add('firstname', TextType::class, [
-                'label' => "Votre prénom",
+                'label' => "Votre prénom :",
                 'constraints' => [
                     new Length([
                         'min' => 2,
@@ -61,7 +61,7 @@ class RegisterUserType extends AbstractType
                     ]
             ])
             ->add('lastname', TextType::class, [
-                'label' => "Votre nom de famille",
+                'label' => "Votre nom de famille :",
                 'constraints' => [
                     new Length([
                         'min' => 2,
@@ -69,7 +69,7 @@ class RegisterUserType extends AbstractType
                     ])
                 ],
                 'attr' => [
-                    'placeholder' => "Indiquez votre nom de famille"
+                    'placeholder' => "Indiquez votre nom de famille :"
                     ]
             ])
             ->add('submit', SubmitType::class, [
