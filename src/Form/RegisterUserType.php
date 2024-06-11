@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -11,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 
 class RegisterUserType extends AbstractType
 {
@@ -25,6 +27,12 @@ class RegisterUserType extends AbstractType
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
+                'constraints' => [
+                    new Length([
+                        'min' => 4,
+                        'max' => 16
+                    ])
+                ],
                 'first_options'  => [
                     'label' => 'Votre mot de passe',
                     'attr' => [
@@ -42,12 +50,24 @@ class RegisterUserType extends AbstractType
             ])
             ->add('firstname', TextType::class, [
                 'label' => "Votre prénom",
+                'constraints' => [
+                    new Length([
+                        'min' => 2,
+                        'max' => 30
+                    ])
+                ],
                 'attr' => [
                     'placeholder' => "Indiquez votre prénom"
                     ]
             ])
             ->add('lastname', TextType::class, [
                 'label' => "Votre nom de famille",
+                'constraints' => [
+                    new Length([
+                        'min' => 2,
+                        'max' => 30
+                    ])
+                ],
                 'attr' => [
                     'placeholder' => "Indiquez votre nom de famille"
                     ]
@@ -64,6 +84,12 @@ class RegisterUserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
+            'constraints' => [
+                new UniqueEntity([
+                    'entityClass' => User::Class,
+                    'fields' => 'email'
+                ])
+                ],
             'data_class' => User::class,
         ]);
     }
