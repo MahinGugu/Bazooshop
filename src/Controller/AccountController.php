@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Form\PasswordUserType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 class AccountController extends AbstractController
@@ -13,4 +17,29 @@ class AccountController extends AbstractController
     {
         return $this->render('account/index.html.twig');
     }
+
+    #[Route('/compte/modifier-mdp', name: 'app_account_modifier_mdp')]
+    public function password(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
+    {
+        $this->addFlash(
+            'success',
+            'Votre mot de passe est correctement mis à jour.'
+        );
+        
+        $user = $this->getUser();
+        
+        $form = $this->createForm(PasswordUserType::class, $user, [
+            'passwordHasher' => $passwordHasher
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {            
+            $entityManager->flush();
+        };
+
+        return $this->render('account/password.html.twig', [
+            'modifierMdp' => $form->createView()
+        ]);
+    }    
 }

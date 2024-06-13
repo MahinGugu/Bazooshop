@@ -69,7 +69,7 @@ class RegisterUserType extends AbstractType
                     ])
                 ],
                 'attr' => [
-                    'placeholder' => "Indiquez votre nom de famille :"
+                    'placeholder' => "Indiquez votre nom de famille"
                     ]
             ])
             ->add('submit', SubmitType::class, [
