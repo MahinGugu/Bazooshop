@@ -32,15 +32,11 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{ path('app_home') }}">Accueil</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Chat</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Chien</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Oiseau</a>
-                    </li>
+                    {% for category in allCategories %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_category', { slug : category.slug }) }}">{{ category.name}}</a>
+                        </li>
+                    {% endfor %}                    
                 </ul>
                 <div class="speed-menu">
                     {% if app.user %}
